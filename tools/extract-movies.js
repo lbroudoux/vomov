@@ -5,6 +5,7 @@ var fs = require('fs'),
     path = require('path'),
     winston = require('winston'),
     bytes = require('bytes'),
+    http = require('http'),
     mongoClient = require('mongodb').MongoClient;
 
 // Read configuration.
@@ -63,9 +64,40 @@ var traverseFileSystem = function(currentPath) {
     }
   }
   if (movies.length > 0) {
-    storeMoviesToMongoDB(movies); 
+    //storeMoviesToMongoDB(movies); 
+    storeMoviesToVomov(movies);
   }
 };
+
+/* */
+var storeMoviesToVomov = function(movies) {
+  var dataString = JSON.stringify(movies);
+  console.log("Sending: " + dataString);
+  var options = {
+    hostname: 'localhost',
+    port: 9000,
+    path: '/api/movies/lbroudoux',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Content-Length': Buffer.byteLength(dataString)
+    }
+  };
+  var req = http.request(options, function(res) {
+    res.setEncoding('utf-8');
+    var responseString = '';
+    res.on('data', function(data) {
+      responseString += data;
+    });
+    res.on('end', function() {
+      var resultObject = JSON.parse(responseString);
+      logger.info('Vomov status: ' + res.statusCode);
+      logger.info('Vomov result: ' + JSON.stringify(resultObject));
+    });
+  });
+  req.write(dataString);
+  req.end();
+}
 
 /* */
 var storeMoviesToMongoDB = function(movies) {  
