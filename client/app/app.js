@@ -9,6 +9,10 @@ angular.module('vomovApp', [
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
+      .when('/movies', {
+        templateUrl: 'app/movies/movies.html',
+        controller: 'MoviesController'
+      })
       .otherwise({
         redirectTo: '/'
       });
