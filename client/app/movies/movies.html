@@ -1,0 +1,47 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-9" role="main">
+      <div class="input-group">
+        <span class="input-group-addon input-sm" id="basic-addon1">
+          <i class="glyphicon glyphicon-search"></i>
+        </span>
+        <input type="text" class="form-control input-sm" placeholder="Search..." aria-describedby="basic-addon1" ng-model="query"/>
+      </div>
+      <br/>
+      <table class="table table-striped table-hover" ng-init="listMovies()">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Volume</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="movie in movies | filter:query">
+            <td>{{ movie.name }}</td>
+            <td>{{ movie.volume }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-3" role="complementary">
+      <nav class="affix" ng-init="listVolumes()">
+        <h3>Volumes</h3>
+        <ul class="list-unstyled list-inline">
+          <li ng-repeat="volume in volumes">
+            <h4><span class="label label-success">{{ volume }}</span></h4>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+      <p>Angular Fullstack v2.0.13 |
+        <a href="https://twitter.com/tyhenkel">@tyhenkel</a> |
+         <a href="https://github.com/DaftMonk/generator-angular-fullstack/issues?state=open">Issues</a></p>
+  </div>
+</footer>
