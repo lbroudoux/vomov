@@ -64,19 +64,24 @@ var traverseFileSystem = function(currentPath) {
     }
   }
   if (movies.length > 0) {
-    //storeMoviesToMongoDB(movies); 
-    storeMoviesToVomov(movies);
+    if (config.useVomov) {
+      logger.info("Configuration has set useVomov to true, connecting to remote...");
+      storeMoviesToVomov(movies);  
+    } else {
+      logger.info("Configuration is set to use local MongoDB...");
+      storeMoviesToMongoDB(movies); 
+    }
   }
 };
 
 /* */
 var storeMoviesToVomov = function(movies) {
   var dataString = JSON.stringify(movies);
-  console.log("Sending: " + dataString);
+  logger.debug("Sending: " + dataString);
   var options = {
     hostname: 'localhost',
     port: 9000,
-    path: '/api/movies/lbroudoux',
+    path: '/api/movies/' + config.username,
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -91,8 +96,8 @@ var storeMoviesToVomov = function(movies) {
     });
     res.on('end', function() {
       var resultObject = JSON.parse(responseString);
-      logger.info('Vomov status: ' + res.statusCode);
-      logger.info('Vomov result: ' + JSON.stringify(resultObject));
+      logger.debug('Vomov status: ' + res.statusCode);
+      logger.debug('Vomov result: ' + JSON.stringify(resultObject));
     });
   });
   req.write(dataString);

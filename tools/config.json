@@ -1,5 +1,9 @@
 {
-  "extensions" : [".avi", ".mkv", ".mp4"],
+  "useVomov": true,
+  "username" : "lbroudoux",
+  "clientId" : "", 
+  "clientSecret" : "",
+  "extensions" : [".avi", ".mkv", ".mp4", ".mov"],
   "db" : {
     "host" : "localhost",
     "port" : 27017,
