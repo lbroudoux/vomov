@@ -9,6 +9,9 @@ var compose = require('composable-middleware');
 var User = require('../api/user/user.model');
 var validateJwt = expressJwt({ secret: config.secrets.session });
 
+var basicOAuth = require('./basic/validate');
+var validateToken = basicOAuth();
+
 /**
  * Attaches the user object to the request if authenticated
  * Otherwise returns 403
@@ -27,8 +30,9 @@ function isAuthenticated() {
         next();
       }
     })
-    // Validate OAutth access_token for API aaccess if no jwt
-    .use(function(req, res, next) {
+    // Validate OAutth access_token for API access if jwt has
+    // failed - ie. there's a Bearer but it cannot be validate
+    .use(function(err, req, res, next) {
       validateToken(req, res, next);
     })
     // Attach user to request

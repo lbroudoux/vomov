@@ -20,7 +20,7 @@ exports.list = function(req, res) {
 };
 
 exports.show = function(req, res) {
-  Movie.findById(req.params.id, function (err, thing) {
+  Movie.findById(req.params.id, function (err, movie) {
     if (err) { return handleError(res, err); }
     if (!movie) { return res.send(404); }
     return res.json(movie);
@@ -42,6 +42,14 @@ exports.importMovies = function(req, res) {
   }
 };
 
+exports.listVolumes = function(req, res) {
+  Movie.distinct('volume', 'username' == req.params.username, function (err, movies) {
+    console.log('Volumes: ' + JSON.stringify(movies));
+    if (err) { return handleError(res, err); }
+    return res.json(200, movies);
+  });
+};
+
 exports.listVolume = function(req, res) {
   Movie.find({'username': req.params.username, 'volume': req.params.volume}, function (err, movies) {
     if (err) { return handleError(res, err); }
@@ -55,3 +63,7 @@ exports.removeVolume = function(req, res) {
     return res.json(200, movies);
   });
 };
+
+function handleError(res, err) {
+  return res.send(500, err);
+}

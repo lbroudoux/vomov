@@ -26,7 +26,7 @@ module.exports = function(options) {
     Token.findOne({ 'token': token }, function(err, token) {
       if (err) {}
       if (!token) {}
-      req.user.name = token.username;
+      req.user = {_id: token.userid};
       next();
     });
   }

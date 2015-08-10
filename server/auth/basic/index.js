@@ -15,7 +15,7 @@ router.post('/access_token', function(req, res, next) {
     if (!user) return res.json(404, {message: 'Something went wrong, please try again.'});
     
     var uid = utils.uid(64);
-    var token = {username: user.name, token: uid};
+    var token = {userid: user._id, token: uid};
     Token.create(token, function(err, token) {
       if (err) { return handleError(res, err); }
       return res.json(201, {token: uid});
