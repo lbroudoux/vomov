@@ -3,45 +3,53 @@
 <div class="container">
   <div class="row">
     <div class="col-md-9" role="main">
+      <br/>
       <div class="input-group">
-        <span class="input-group-addon input-sm" id="basic-addon1">
+        <span class="input-group-addon input-sm" id="search-group">
           <i class="glyphicon glyphicon-search"></i>
         </span>
-        <input type="text" class="form-control input-sm" placeholder="Search..." aria-describedby="basic-addon1" ng-model="query"/>
+        <input type="text" class="form-control input-sm" placeholder="Search..." aria-describedby="search-group" ng-model="q" ng-enter="searchMovies(q)"/>
       </div>
       <br/>
+      <span class="badge"><b>{{ movies.length }}</b></span> movies in your selection
+      <br/><br/>
       <table class="table table-striped table-hover" ng-init="listMovies()">
         <thead>
           <tr>
             <th>Name</th>
+            <th>Size</th>
             <th>Volume</th>
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="movie in movies | filter:query">
+          <tr ng-repeat="movie in movies | filter:f" class="vol-{{ movie.volume }}">
             <td>{{ movie.name }}</td>
+            <td>{{ movie.size }}</td>
             <td>{{ movie.volume }}</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div class="col-md-3" role="complementary">
+    <div class="col-md-3 text-right" role="complementary">
+      <div class="pull-right">
+        <h3>Filter</h3>
+      </div>
       <nav class="affix" ng-init="listVolumes()">
-        <h3>Volumes</h3>
+        <br/><br/><br/>
+        <h4>By Name</h4>
+        <div class="input-group">
+          <span class="input-group-addon input-sm" id="filter-group">
+            <i class="glyphicon glyphicon-filter"></i>
+          </span>
+          <input type="text" class="form-control input-sm" placeholder="Filter..." aria-describedby="filter-group" ng-model="f"/>
+        </div>
+        <h4>By Volume</h4>
         <ul class="list-unstyled list-inline">
           <li ng-repeat="volume in volumes">
-            <h4><span class="label label-success">{{ volume }}</span></h4>
+            <h4><a ng-click="toggleVolume(volume)"><span id="vol-{{ volume }}" class="label label-success"><i class="fa fa-hdd-o"></i> {{ volume }}</span></a></h4>
           </li>
         </ul>
       </nav>
     </div>
   </div>
 </div>
-
-<footer class="footer">
-  <div class="container">
-      <p>Angular Fullstack v2.0.13 |
-        <a href="https://twitter.com/tyhenkel">@tyhenkel</a> |
-         <a href="https://github.com/DaftMonk/generator-angular-fullstack/issues?state=open">Issues</a></p>
-  </div>
-</footer>

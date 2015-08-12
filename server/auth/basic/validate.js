@@ -24,9 +24,14 @@ module.exports = function(options) {
     
     // We've got a token to check
     Token.findOne({ 'token': token }, function(err, token) {
-      if (err) {}
-      if (!token) {}
-      req.user = {_id: token.userid};
+      if (err) {
+        console.log('Error while querying for token ' + token);
+      }
+      if (token) {
+        req.user = {_id: token.userid};
+      } else {
+        next(new UnauthorizedError('invalid_token', { message : 'No Tokan was found' }));
+      }
       next();
     });
   }

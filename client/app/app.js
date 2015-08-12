@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('vomovApp', [
+  'vomovApp.directives',
   'ngCookies',
   'ngResource',
   'ngSanitize',

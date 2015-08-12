@@ -11,12 +11,22 @@
 var _ = require('lodash');
 var Movie = require('./movie.model');
 
-// Get list of movies for username
+// Get list of latest movies for username
 exports.list = function(req, res) {
-  Movie.find({'username': req.params.username}, function (err, movies) {
-    if (err) { return handleError(res, err); }
-    return res.json(200, movies);
-  });
+  console.log("req.query: " + req.query);
+  if (!req.query.q) {
+    Movie.find({'username': req.params.username}, function (err, movies) {
+      if (err) { return handleError(res, err); }
+      return res.json(200, movies);
+    });
+  } else {
+    console.log("Searching for " + req.query.q);
+    Movie
+      .find({'username': req.params.username, 'name': {$regex: req.query.q, $options:'i'}}, function (err, movies) {
+      if (err) { return handleError(res, err); }
+      return res.json(200, movies);
+    });
+  }
 };
 
 exports.show = function(req, res) {
@@ -44,12 +54,12 @@ exports.importMovies = function(req, res) {
 
 exports.listVolumes = function(req, res) {
   Movie.distinct('volume', 'username' == req.params.username, function (err, movies) {
-    console.log('Volumes: ' + JSON.stringify(movies));
     if (err) { return handleError(res, err); }
     return res.json(200, movies);
   });
 };
 
+// Get list of movies by volume
 exports.listVolume = function(req, res) {
   Movie.find({'username': req.params.username, 'volume': req.params.volume}, function (err, movies) {
     if (err) { return handleError(res, err); }

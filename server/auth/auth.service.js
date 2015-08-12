@@ -24,16 +24,22 @@ function isAuthenticated() {
       if (req.query && req.query.hasOwnProperty('access_token')) {
         req.headers.authorization = 'Bearer ' + req.query.access_token;
       }
-      if (req.headers.authorization) {
+      if (req.headers && req.headers.authorization) {
+        console.log('Try to validateJwt');
         validateJwt(req, res, next);
       } else {
         next();
       }
     })
-    // Validate OAutth access_token for API access if jwt has
+    // Validate OAuth access_token for API access if jwt has
     // failed - ie. there's a Bearer but it cannot be validate
     .use(function(err, req, res, next) {
-      validateToken(req, res, next);
+      if (!req.user && req.headers && req.headers.authorization) {
+        console.log('Try to validateToken');
+        validateToken(req, res, next);
+      } else {
+        next();
+      }
     })
     // Attach user to request
     .use(function(req, res, next) {
