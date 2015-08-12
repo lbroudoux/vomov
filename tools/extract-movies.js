@@ -11,6 +11,9 @@ var fs = require('fs'),
 // Read configuration.
 var config = require(path.join(__dirname, 'config.json'));
 
+// Vomov OAuth token for API access.
+var token;
+
 // Define logger.
 var logger = new (winston.Logger)({
   transports: [
@@ -42,8 +45,14 @@ fs.exists(directoryToScan, function(exists) {
  * Launched once prerequisites are all checked.
  */
 function startScanning() {
-  //
-  traverseFileSystem(directoryToScan);
+  if (config.useVomov) {
+    // First, authenticate as blocking and then traverse.
+    logger.info("Configuration has set useVomov to true, authenticating to remote...");
+    authenticatingToVomov(); 
+  } else {
+    // Just proceed with traversing.
+    traverseFileSystem(directoryToScan);
+  }
 }
 
 /* */
@@ -64,7 +73,7 @@ var traverseFileSystem = function(currentPath) {
     }
   }
   if (movies.length > 0) {
-    if (config.useVomov) {
+    if (config.useVomov) {  
       logger.info("Configuration has set useVomov to true, connecting to remote...");
       storeMoviesToVomov(movies);  
     } else {
@@ -73,6 +82,31 @@ var traverseFileSystem = function(currentPath) {
     }
   }
 };
+
+/* */
+var authenticatingToVomov = function() {
+  var options = {
+    hostname: 'localhost',
+    port: 9000,
+    path: '/auth/oauth/access_token',
+    method: 'POST',
+    headers: {
+      'Authorization': 'Basic ' + new Buffer(config.clientId + ':' + config.clientSecret).toString('base64')
+    }
+  };
+  var req = http.request(options, function(res) {
+    res.setEncoding('utf-8');
+    res.on('data', function(data) {
+      token = JSON.parse(data).token;
+      logger.info('Got an OAuth token: ' + token + '. Now proceeding...');
+      traverseFileSystem(directoryToScan);
+    });
+    res.on('error', function(e) {
+      logger.error('Problem authenticating to Vomov: ' + e.message);
+    });
+  });
+  req.end();
+}
 
 /* */
 var storeMoviesToVomov = function(movies) {
@@ -85,7 +119,8 @@ var storeMoviesToVomov = function(movies) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Content-Length': Buffer.byteLength(dataString)
+      'Content-Length': Buffer.byteLength(dataString),
+      'Authorization': 'Bearer ' + token
     }
   };
   var req = http.request(options, function(res) {
