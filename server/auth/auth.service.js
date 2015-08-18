@@ -25,7 +25,7 @@ function isAuthenticated() {
         req.headers.authorization = 'Bearer ' + req.query.access_token;
       }
       if (req.headers && req.headers.authorization) {
-        console.log('Try to validateJwt');
+        //console.log('Try to validateJwt');
         validateJwt(req, res, next);
       } else {
         next();
@@ -35,7 +35,7 @@ function isAuthenticated() {
     // failed - ie. there's a Bearer but it cannot be validate
     .use(function(err, req, res, next) {
       if (!req.user && req.headers && req.headers.authorization) {
-        console.log('Try to validateToken');
+        //console.log('Try to validateToken');
         validateToken(req, res, next);
       } else {
         next();

@@ -2,10 +2,8 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-7">
       <h1>Change Password</h1>
-    </div>
-    <div class="col-sm-12">
       <form class="form" name="form" ng-submit="changePassword(form)" novalidate>
 
         <div class="form-group">
@@ -22,8 +20,7 @@
           <label>New Password</label>
 
           <input type="password" name="newPassword" class="form-control" ng-model="user.newPassword"
-                 ng-minlength="3"
-                 required/>
+                 ng-minlength="3" required/>
           <p class="help-block"
              ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || submitted)">
             Password must be at least 3 characters.
@@ -32,8 +29,24 @@
 
         <p class="help-block"> {{ message }} </p>
 
-        <button class="btn btn-lg btn-primary" type="submit">Save changes</button>
+        <button class="btn btn-primary" type="submit">Save changes</button>
       </form>
+    </div>
+    <div class="col-sm-5 text-right">
+      <h2>API Access</h2>
+      <p>Use API keys when remote connecting using import tool</p><br/>
+
+      <div class="row">
+        <div class="col-xs-6 text-right"><b>API Key</b></div>
+        <div class="col-xs-6 text-left"><code>{{ getCurrentUser().apiKey.id }}</code></div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 text-right"><b>API Secret</b></div>
+        <div class="col-xs-6 text-left"><code>{{ getCurrentUser().apiKey.secret }}</code></div>
+      </div>
+      <br/><br/>
+      <a class="btn btn-warning" ng-click="getNewKeys()">Get new keys</a><br/><br/>
+      <p class="small">(Remember to update import tool settings)</p> 
     </div>
   </div>
 </div>

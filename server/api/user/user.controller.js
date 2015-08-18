@@ -4,6 +4,7 @@ var User = require('./user.model');
 var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
+var utils = require('./utils');
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -27,6 +28,7 @@ exports.create = function (req, res, next) {
   var newUser = new User(req.body);
   newUser.provider = 'local';
   newUser.role = 'user';
+  newUser.apiKey = {id: utils.uid(16), secret: utils.uid(16)};
   newUser.save(function(err, user) {
     if (err) return validationError(res, err);
     var token = jwt.sign({_id: user._id }, config.secrets.session, { expiresInMinutes: 60*5 });
@@ -78,6 +80,22 @@ exports.changePassword = function(req, res, next) {
     }
   });
 };
+
+/**
+ * Regenerate user API Keys
+ */
+exports.resetAPIKey = function(req, res, next) {
+  var userId = req.user._id;
+  User.findById(userId, function (err, user) {
+    if (err) return next(err);
+    if (!user) return res.json(401);
+    user.apiKey = {id: utils.uid(16), secret: utils.uid(16)};
+    user.save(function(err, user) {
+      if (err) return validationError(res, err);
+      res.send(200);
+    });
+  });
+}
 
 /**
  * Get my info

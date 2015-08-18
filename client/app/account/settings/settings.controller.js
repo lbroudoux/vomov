@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vomovApp')
-  .controller('SettingsCtrl', function ($scope, User, Auth) {
+  .controller('SettingsCtrl', function ($scope, $http, User, Auth) {
     $scope.errors = {};
 
     $scope.changePassword = function(form) {
@@ -18,4 +18,13 @@ angular.module('vomovApp')
         });
       }
 		};
+
+    $scope.getCurrentUser = Auth.getCurrentUser;
+
+    $scope.getNewKeys = function() {
+      $http.put('/api/users/apiKey/reset').success(function() {
+        Auth.refresh();
+        $scope.getCurrentUser = Auth.getCurrentUser;
+      })
+    }
   });

@@ -10,6 +10,13 @@ angular.module('vomovApp')
     return {
 
       /**
+       * Refresh user object  after modification.
+       */
+      refresh: function() {
+        currentUser = User.get();
+      },
+
+      /**
        * Authenticate user and save token
        *
        * @param  {Object}   user     - login info
