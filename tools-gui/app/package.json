@@ -1,0 +1,21 @@
+{
+  "name": "vomov-tools-gui",
+  "main": "app.html",
+  "title": "Vomov importation tool",
+  "version": "0.0.1",
+  "description": "Some tools for managing my Very Own MOVie database",
+  "dependencies": {
+    "jsonfile": "2.2.1",
+    "bytes": "1.0.0"
+  },
+  "devDependencies": {
+  },
+  "window": {
+    "toolbar": false,
+    "width": 700,
+    "height": 400
+  },
+  "engines": {
+    "node": ">=0.10.0" 
+  }
+}

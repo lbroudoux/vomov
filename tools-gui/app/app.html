@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Vomov Importation Tool</title>
+    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="resources/css/bootstrap.min.css">
+  </head>
+  <body>
+    <header class="header">
+      <div class="row">
+        <div class="col-xs-4">
+          <img src="resources/vomov.png" alt="vomov logo">
+        </div>
+        <div class="col-xs-4 center-block">
+          <h5>Vomov importation tool</h5>
+        </div>
+        <div class="col-xs-4 text-right">
+          <a href="#" onclick="toggleSettings()"><span class="glyphicon glyphicon-cog btn-lg"></span></a>
+        </div>
+      </div>
+    </header>
+    <div class="container-fluid main">
+      <div class="row">
+        <div class="col-xs-12">
+          <form class="form-horizontal">
+            <fieldset id="import-panel">
+              <legend>Import settings</legend>
+              <div class="form-group">
+                <label class="col-xs-2 control-label" for="pathj">Path</label>
+                <div class="col-xs-6">
+                  <input id="path" class="form-control input-sm" type="text" placeholder="Path to index..."/>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-xs-2 control-label" for="volume">Volume</label>
+                <div class="col-xs-6">
+                  <input id="volume" class="form-control input-sm" type="text" placeholder="Label of volume..."/>
+                </div>
+                <div class="col-xs-2">  
+                  <a class="btn btn-success" onclick="launchImport()">Launch import</a>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-xs-2 control-label" for="progess">Progress</label>
+                <div class="col-xs-6">
+                  <div class="progress progress-striped active">
+                    <div id="progress" class="progress-bar" style="width: 1%"></div>                    
+                  </div>
+                  <span id="status"></span>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset id="settings-panel" class="hidden">
+              <legend>User settings</legend>
+              <div class="form-group">
+                <label class="col-xs-2 control-label" for="username">Username</label>
+                <div class="col-xs-6">
+                  <input id="username" class="form-control input-sm" type="text" placeholder="Username"/>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-xs-2 control-label" for="apiKey">API key</label>
+                <div class="col-xs-6">
+                  <input id="apiKey" class="form-control input-sm" type="text" placeholder="123456789"/>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-xs-2 control-label" for="apiSecret">API secret</label>
+                <div class="col-xs-6">
+                  <input id="apiSecret" class="form-control input-sm" type="text" placeholder="123456789"/>
+                </div>
+                <div class="col-xs-2">  
+                  <button class="btn btn-success" onclick="saveSettings()">Save</button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+         </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="container">
+        <p>Vomov Collection Helper v0.0.1 |
+          <a href="https://twitter.com/lbroudoux">@lbroudoux</a> |
+            <a href="https://github.com/lbroudoux/vomov/issues?state=open">Issues</a></p>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script src="resources/js/bootstrap.min.js"></script>
+  </body>
+</html>

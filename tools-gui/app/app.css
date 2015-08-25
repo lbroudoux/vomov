@@ -1,0 +1,43 @@
+
+/**
+ * Bootstrap Fonts */
+
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('resources/fonts/glyphicons-halflings-regular.eot');
+  src: url('resources/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),
+  url('resources/fonts/glyphicons-halflings-regular.woff') format('woff'),
+  url('resources/fonts/glyphicons-halflings-regular.ttf') format('truetype'),
+  url('resources/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+
+.header {
+  background-color: #dd4814;
+  border-color: #bf3e11;
+  padding: 5px 10px;
+  color: #ffffff;
+}
+.header a {
+  color: #ffffff !important;
+}
+
+.main {
+  position: relative;
+  padding: 20px;
+  color: #F5F5F5;
+  background: #772953;
+  opacity: 0.90;
+}
+legend {
+  font-size: 1.2em !important;
+  color: #ffffff !important;
+}
+.progress {
+  margin-bottom: 5px !important;
+}
+
+.footer {
+  text-align: center;
+  padding: 20px 0;
+  border-top: 1px solid #E5E5E5;
+}

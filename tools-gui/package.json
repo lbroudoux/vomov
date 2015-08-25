@@ -1,0 +1,23 @@
+{
+  "name": "vomov-tools-gui",
+  "main": "app.html",
+  "title": "Vomov importation tool",
+  "version": "0.0.1",
+  "description": "Some tools for managing my Very Own MOVie database",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "grunt": "~0.4.4",
+    "jit-grunt": "^0.5.0",
+    "grunt-auto-install": "0.2.4",
+    "grunt-nw-builder": "2.0.0"
+  },
+  "window": {
+    "toolbar": true,
+    "width": 700,
+    "height": 400
+  },
+  "engines": {
+    "node": ">=0.10.0" 
+  }
+}
