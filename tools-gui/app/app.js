@@ -1,5 +1,8 @@
 'use strict';
 
+var vomovHost = 'vomov.herokuapp.com';
+var vomovPort = 80;
+
 // Frontend related functions.
 var toggleSettings = function() {
   var importP = document.querySelector('#import-panel');
@@ -119,8 +122,8 @@ var evaluateSubDirectories = function(currentPath) {
 var authenticatingToVomov = function() {
   printStatus('Authenticating to Vomov remote API...')
   var options = {
-    hostname: 'localhost',
-    port: 9000,
+    hostname: vomovHost,
+    port: vomovPort,
     path: '/auth/oauth/access_token',
     method: 'POST',
     headers: {
@@ -168,8 +171,8 @@ var storeMoviesToVomov = function(movies) {
   var dataString = JSON.stringify(movies);
   console.log("Sending: " + dataString);
   var options = {
-    hostname: 'localhost',
-    port: 9000,
+    hostname: vomovHost,
+    port: vomovPort,
     path: '/api/movies/' + username,
     method: 'POST',
     headers: {
