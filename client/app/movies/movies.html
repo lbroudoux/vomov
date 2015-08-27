@@ -22,7 +22,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="movie in movies | filter:f" class="vol-{{ movie.volume }}">
+          <tr ng-repeat="movie in movies | filter:f" class="tog vol-{{ movie.volume }}" 
+              data-toggle="tooltip" data-placement="top" title="{{ movie.path }}">
             <td>{{ movie.name }}</td>
             <td>{{ movie.size }}</td>
             <td>{{ movie.volume }}</td>
@@ -30,26 +31,24 @@
         </tbody>
       </table>
     </div>
-    <div class="col-md-3 text-right" role="complementary">
-      <div class="pull-right">
-        <h3>Filter</h3>
+    <div class="col-md-3 text-right" role="complementary" ng-init="listVolumes()">
+      <br/>
+      <h3>Filter</h3>
+      <br/>
+      <h4>By Name</h4>
+      <div class="input-group">
+        <span class="input-group-addon input-sm" id="filter-group">
+          <i class="glyphicon glyphicon-filter"></i>
+        </span>
+        <input type="text" class="form-control input-sm" placeholder="Filter..." aria-describedby="filter-group" ng-model="f"/>
       </div>
-      <nav class="affix" ng-init="listVolumes()">
-        <br/><br/><br/>
-        <h4>By Name</h4>
-        <div class="input-group">
-          <span class="input-group-addon input-sm" id="filter-group">
-            <i class="glyphicon glyphicon-filter"></i>
-          </span>
-          <input type="text" class="form-control input-sm" placeholder="Filter..." aria-describedby="filter-group" ng-model="f"/>
-        </div>
-        <h4>By Volume</h4>
-        <ul class="list-unstyled list-inline">
-          <li ng-repeat="volume in volumes">
-            <h4><a ng-click="toggleVolume(volume)"><span id="vol-{{ volume }}" class="label label-success"><i class="fa fa-hdd-o"></i> {{ volume }}</span></a></h4>
-          </li>
-        </ul>
-      </nav>
+      <br/>
+      <h4>By Volume</h4>
+      <ul class="list-unstyled list-inline">
+        <li ng-repeat="volume in volumes">
+          <h4><a ng-click="toggleVolume(volume)"><span id="vol-{{ volume }}" class="label label-success"><i class="fa fa-hdd-o"></i> {{ volume }}</span></a></h4>
+        </li>
+      </ul>
     </div>
   </div>
 </div>

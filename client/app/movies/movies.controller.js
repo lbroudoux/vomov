@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('vomovApp')
-  .controller('MoviesController', function ($scope, $http, Auth) {
+  .controller('MoviesController', function ($scope, $http, $interval, Auth) {
   
   $scope.page = 1;
   $scope.pageSize = 20;
@@ -9,6 +9,9 @@ angular.module('vomovApp')
   $scope.listMovies = function() {
     $http.get('/api/movies/' + Auth.getCurrentUser().name).success(function(movies) {
       $scope.movies = movies;
+      $interval(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+      }, 100, 1);
     })
   };
   
@@ -35,6 +38,9 @@ angular.module('vomovApp')
   $scope.searchMovies = function(query) {
     $http.get('/api/movies/' + Auth.getCurrentUser().name + "/?q=" + query).success(function(movies) {
       $scope.movies = movies;
+      $interval(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+      }, 100, 1);
     })
   }
 });
