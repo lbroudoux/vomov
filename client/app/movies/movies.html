@@ -23,7 +23,7 @@
         </thead>
         <tbody>
           <tr ng-repeat="movie in movies | filter:f" class="tog vol-{{ movie.volume }}" 
-              data-toggle="tooltip" data-placement="top" title="{{ movie.path }}">
+              data-toggle="popover" data-placement="top" data-content="{{ movie.path }}" title="Path">
             <td>{{ movie.name }}</td>
             <td>{{ movie.size }}</td>
             <td>{{ movie.volume }}</td>

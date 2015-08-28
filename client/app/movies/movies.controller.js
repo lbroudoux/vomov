@@ -10,7 +10,7 @@ angular.module('vomovApp')
     $http.get('/api/movies/' + Auth.getCurrentUser().name).success(function(movies) {
       $scope.movies = movies;
       $interval(function() {
-        $('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="popover"]').popover();
       }, 100, 1);
     })
   };
@@ -39,7 +39,7 @@ angular.module('vomovApp')
     $http.get('/api/movies/' + Auth.getCurrentUser().name + "/?q=" + query).success(function(movies) {
       $scope.movies = movies;
       $interval(function() {
-        $('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="popover"]').popover();
       }, 100, 1);
     })
   }
